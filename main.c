@@ -26,19 +26,22 @@ int main(void)
     UART0_FBRD_R = 13;
     UART0_LCRH_R = 0x60;
     UART0_CC_R = 0x00;
-    UART0_CTL_R = 0x11; // enabling UART0 in loopback
+    UART0_CTL_R = 0x81; // enabling UART0 in loopback
 
     uint8_t rx_reg = 0x00;
 
     while(1){
         UART0_DR_R = 0xA0; // initiates transmission
-        while ((UART0_FR_R & 0x80) == 0x00){
+        GPIO_PORTF_DATA_R |= 0x02;
+        while ((UART0_FR_R & 0x08) == 0x08){
             ; // wait till transmission is complete
         }
-        rx_reg = UART0_DR_R & 0xFF;
-        delayus(2);
-        GPIO_PORTF_DATA_R = 0x0E;
-        delayus(8);
+        rx_reg = UART0_DR_R & 0xFF; // read least significant byte
+//        if (rx_reg == 0xA0){
+        GPIO_PORTF_DATA_R |= 0x04;
+//            delayus(500);
+//        }
+
     }
 
 	return 0;
