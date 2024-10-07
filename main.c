@@ -6,7 +6,7 @@
  * main.c
  */
 uint8_t message = 0xAA;
-uint8_t PORTF_Interrupt = 0xAA;
+uint8_t PORTF_Interrupt = 0x00;
 
 void GPIOInterrupt();
 
