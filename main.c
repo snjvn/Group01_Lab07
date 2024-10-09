@@ -18,7 +18,8 @@ int main(void)
 
     SYSCTL_RCGCUART_R |= 0x02; // enabling clock to UART module 0
     SYSCTL_RCGCGPIO_R |= 0x22; // enabling clock to PORTB
-
+    GPIO_PORTB_LOCK_R = 0x4C4F434B;     /* unlock commit register */
+    GPIO_PORTB_CR_R = 0x03;             /* make PORTF configurable */
     GPIO_PORTB_AFSEL_R = 0x03; // selecting A0, A1 for UART operations
     GPIO_PORTB_PCTL_R = 0x11; // muxing A0 and A1 to Rx and Tx pins of UART0 module, respectively
 
@@ -27,7 +28,7 @@ int main(void)
     UART1_FBRD_R = 13;
     UART1_LCRH_R = 0x62;
     UART1_CC_R = 0x00;
-    UART1_CTL_R = 0x0381; // enabling UART1 in loopback
+    UART1_CTL_R = 0x0301; // enabling UART1 in loopback
 
     uint8_t rx_reg = 0x00;
 
