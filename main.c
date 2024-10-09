@@ -17,9 +17,10 @@ int main(void)
     INIT_GPIO_PORTF_REGISTERS();
 
     SYSCTL_RCGCUART_R |= 0x02; // enabling clock to UART module 0
-    SYSCTL_RCGCGPIO_R |= 0x02; // enabling clock to PORTB
-    GPIO_PORTA_AFSEL_R = 0x03; // selecting A0, A1 for UART operations
-    GPIO_PORTA_PCTL_R = 0x11; // muxing A0 and A1 to Rx and Tx pins of UART0 module, respectively
+    SYSCTL_RCGCGPIO_R |= 0x22; // enabling clock to PORTB
+
+    GPIO_PORTB_AFSEL_R = 0x03; // selecting A0, A1 for UART operations
+    GPIO_PORTB_PCTL_R = 0x11; // muxing A0 and A1 to Rx and Tx pins of UART0 module, respectively
 
     UART1_CTL_R = 0x00;
     UART1_IBRD_R = 130;
