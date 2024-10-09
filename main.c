@@ -16,17 +16,17 @@ int main(void)
 
     INIT_GPIO_PORTF_REGISTERS();
 
-    SYSCTL_RCGCUART_R |= 0x01; // enabling clock to UART module 0
-    SYSCTL_RCGCGPIO_R |= 0x01; // enabling clock to PORTFA
+    SYSCTL_RCGCUART_R |= 0x02; // enabling clock to UART module 0
+    SYSCTL_RCGCGPIO_R |= 0x02; // enabling clock to PORTB
     GPIO_PORTA_AFSEL_R = 0x03; // selecting A0, A1 for UART operations
     GPIO_PORTA_PCTL_R = 0x11; // muxing A0 and A1 to Rx and Tx pins of UART0 module, respectively
 
-    UART0_CTL_R = 0x00;
-    UART0_IBRD_R = 130;
-    UART0_FBRD_R = 13;
-    UART0_LCRH_R = 0x60;
-    UART0_CC_R = 0x00;
-    UART0_CTL_R = 0x0381; // enabling UART0 in loopback
+    UART1_CTL_R = 0x00;
+    UART1_IBRD_R = 130;
+    UART1_FBRD_R = 13;
+    UART1_LCRH_R = 0x62;
+    UART1_CC_R = 0x00;
+    UART1_CTL_R = 0x0381; // enabling UART1 in loopback
 
     uint8_t rx_reg = 0x00;
 
@@ -34,11 +34,11 @@ int main(void)
         NVIC_EN0_R = 0x40000000; // 30th bit controls PORTF GPIO interrupts
         GPIO_PORTF_IM_R = 0x11; // unmasking both switches
 
-        UART0_DR_R = message; // initiates transmission
-        while ((UART0_FR_R & 0x08) == 0x08){
+        UART1_DR_R = message; // initiates transmission
+        while ((UART1_FR_R & 0x08) == 0x08){
             ; // wait till transmission is complete
         }
-        rx_reg = UART0_DR_R & 0xFF; // read least significant byte
+        rx_reg = UART1_DR_R & 0xFF; // read least significant byte
         if (rx_reg == 0xF0){
             GPIO_PORTF_DATA_R &= 0x04;
             GPIO_PORTF_DATA_R ^= 0x04;
