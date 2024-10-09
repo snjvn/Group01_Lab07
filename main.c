@@ -21,14 +21,15 @@ int main(void)
     GPIO_PORTB_LOCK_R = 0x4C4F434B;     /* unlock commit register */
     GPIO_PORTB_CR_R = 0x03;             /* make PORTF configurable */
     GPIO_PORTB_AFSEL_R = 0x03; // selecting A0, A1 for UART operations
-    GPIO_PORTB_PCTL_R = 0x11; // muxing A0 and A1 to Rx and Tx pins of UART0 module, respectively
+    GPIO_PORTB_PCTL_R = 0x11; // muxing B0 and B1 to Rx and Tx pins of UART0 module, respectively
+    GPIO_PORTB_DIR_R = 0x02;
 
     UART1_CTL_R = 0x00;
     UART1_IBRD_R = 130;
     UART1_FBRD_R = 13;
     UART1_LCRH_R = 0x62;
     UART1_CC_R = 0x00;
-    UART1_CTL_R = 0x0301; // enabling UART1 in loopback
+    UART1_CTL_R = 0x0381; // enabling UART1 in loopback
 
     uint8_t rx_reg = 0x00;
 
