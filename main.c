@@ -31,7 +31,7 @@ int main(void)
     UART1_LCRH_R = 0x62;
     UART1_CC_R = 0x00;
     UART1_CTL_R = 0x0301; // enabling UART1 in loopback
-
+    UART1_ECR_R = 0x07;
     uint8_t rx_reg = 0x00;
 
     while(1){
