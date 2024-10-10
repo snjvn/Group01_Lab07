@@ -45,16 +45,26 @@ int main(void)
         while (UART1_FR_R & 0x08){
             ; // wait till transmission is complete
         }
-        rx_reg = UART1_DR_R & 0xFF; // read least significant byte
-        if (rx_reg == 0xF0){
+        rx_reg = UART1_DR_R & 0xFFF; // read least significant byte
+        if ((rx_reg & 0xFF) == 0xF0){
             GPIO_PORTF_DATA_R &= 0x04;
             GPIO_PORTF_DATA_R ^= 0x04;
             delayus(500000);
         }
-        else if (rx_reg == 0xAA){
+        else if ((rx_reg & 0xFF) == 0xAA){
             GPIO_PORTF_DATA_R &= 0x08;
             GPIO_PORTF_DATA_R ^= 0x08;
             delayus(500000);
+        }
+
+        else if (rx_reg & 0xF00){ // if any of the error bits are on
+            GPIO_PORTF_DATA_R &= 0x02;
+            GPIO_PORTF_DATA_R ^= 0x02;
+        }
+
+        else{ // idle/not started
+            GPIO_PORTF_DATA_R &= 0x0E;
+            GPIO_PORTF_DATA_R ^= 0x0E;
         }
 
     }
