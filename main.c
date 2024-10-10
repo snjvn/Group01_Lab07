@@ -63,8 +63,8 @@ int main(void)
         }
 
         else{ // idle/not started
-            GPIO_PORTF_DATA_R &= 0x0E;
-            GPIO_PORTF_DATA_R ^= 0x0E;
+            GPIO_PORTF_DATA_R &= 0x02;
+            GPIO_PORTF_DATA_R ^= 0x02;
         }
 
     }
