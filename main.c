@@ -5,7 +5,7 @@
 /**
  * main.c
  */
-uint8_t message = 0xAA;
+uint8_t message = 0x00;
 uint8_t PORTF_Interrupt = 0x00;
 
 void GPIOInterrupt();
@@ -23,16 +23,16 @@ int main(void)
     GPIO_PORTB_CR_R = 0x03;             /* make PORTF configurable */
     GPIO_PORTB_DEN_R = 0x03;
     GPIO_PORTB_AFSEL_R = 0x03; // selecting B0, B1 for UART operations
-    GPIO_PORTB_PCTL_R = 0x11; // muxing B0 and B1 to Rx and Tx pins of UART0 module, respectively
+    GPIO_PORTB_PCTL_R = 0x11; // muxing B0 and B1 to Rx and Tx pins of UART1 module, respectively
     GPIO_PORTB_DIR_R = 0x02;
     GPIO_PORTB_PUR_R = 0x02;
 
 
 
 //    UART1_CTL_R = 0x00;
-    UART1_IBRD_R = 130;
-    UART1_FBRD_R = 13;
-    UART1_LCRH_R |= 0x72;
+    UART1_IBRD_R = 104;
+    UART1_FBRD_R = 11;
+    UART1_LCRH_R |= 0x62;
     UART1_CC_R = 0x00;
     UART1_CTL_R |= 0x01; // enabling UART1 in loopback
     uint8_t rx_reg = 0x00;
